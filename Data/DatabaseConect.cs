@@ -71,9 +71,9 @@ namespace Data.Conect
         {
             var check = ObterInfo($"SELECT * FROM usuarios WHERE chat_id = '{chatId}';");
 
-            if (check.Count < 0)
+            if (check.Count <= 0)
             {
-                DeletInsert("INSERT INTO usuarios(chat_id) VALUES('" + chatId + "');");
+                DeletInsert($"INSERT INTO usuarios(chat_id) VALUES('{chatId}');");
             }
         }
 
