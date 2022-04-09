@@ -1,0 +1,7 @@
+{
+    "tokem": "TokemBot",
+    "Server": "localhost",
+    "Database": "BancoDeDados",
+    "user": "UsuarioBanco",
+    "senha": "SenhaBanco"
+}
