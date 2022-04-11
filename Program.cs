@@ -62,12 +62,13 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
 
     var chatId = update.Message.Chat.Id;
     var messageText = update.Message.Text;
+    string Username = update.Message.Chat.Username;
 
     if (messageText == "/start")
     {
         verifica.Salvar(Convert.ToString(chatId));
 
-        string msgSend = "Bem vindo ao bot de tradução, apenas mande um texto que irei tentar tradusir para o português.\nCom o comando /todos você consegue visualizar todos os idiomas suportado pelo bot.\nO idioma padrão selecionado para novos usuários é origem pt e destino en.";
+        string msgSend = "Olá @" + Username + " Bem vindo ao bot de tradução, apenas mande um texto que irei tentar tradusir para o português.\nCom o comando /todos você consegue visualizar todos os idiomas suportado pelo bot.\nO idioma padrão selecionado para novos usuários é origem pt e destino en.";
         await MsgSendAsync(chatId, msgSend, update, cancellationToken);
         await MsgSendAsync(chatId, "Com o comando /trocar, você muda os seus idiomas padrões\nPor exemplo, para mudar origem e destino para espanhol e inglês, ficaria assin:\n/trocar es en\nLembre-se de colocar espassos, ezatamente como está.", update, cancellationToken);
     }
@@ -93,6 +94,7 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
     else if (messageText == "/todos")
     {
         var msgSend = await fin.AllLanguagesAsync();
+        //criar um teclado com os idiomas
 
         await MsgSendAsync(chatId, msgSend, update, cancellationToken);
     }
