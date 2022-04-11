@@ -88,22 +88,31 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
         {
             msgSend = "Comando inválido, verifique e envie novamente.";
         }
+
         await MsgSendAsync(chatId, msgSend, update, cancellationToken);
     }
 
     else if (messageText == "/todos")
     {
         var msgSend = await fin.AllLanguagesAsync();
-        //criar um teclado com os idiomas
 
         await MsgSendAsync(chatId, msgSend, update, cancellationToken);
     }
     else
     {
         string[] dados = verifica.Verificar(Convert.ToString(chatId));
-        string msgSend = await fin.TranslateTextAsync(messageText, dados[0], dados[1]);
 
-        await MsgSendAsync(chatId, msgSend, update, cancellationToken);
+        //se der erro na verificação do chatId
+        if (dados == null)
+        {
+            string msgSend = "Você ainda não definiu seu idioma de origem e destino, use o comando /start para defini-los.\nOu defina manualmente com o comando /trocar e os idiomas que quiser.";
+            await MsgSendAsync(chatId, msgSend, update, cancellationToken);
+        }
+        else
+        {
+            string msgSend = await fin.TranslateTextAsync(messageText, dados[0], dados[1]);
+            await MsgSendAsync(chatId, msgSend, update, cancellationToken);
+        }
     }
 }
 
