@@ -76,9 +76,17 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
     {
         //separar a menssagem por espassos
         var texto = messageText.Split(" ");
-        string[] atualizado = verifica.Atualizar(chatId.ToString(), texto[1], texto[2]);
-
-        string msgSend = $"Idioma origem atualizado para: {atualizado[0]}\nIdioma destino atualizado para: {atualizado[1]}";
+        //se o tamanho do  array for igual a 3
+        string msgSend = null;
+        if (texto.Length == 3)
+        {
+            string[] atualizado = atualizado = verifica.Atualizar(chatId.ToString(), texto[1], texto[2]);
+            msgSend = $"Idioma origem atualizado para: {atualizado[0]}\nIdioma destino atualizado para: {atualizado[1]}";
+        }
+        else
+        {
+            msgSend = "Comando inválido, verifique e envie novamente.";
+        }
         await MsgSendAsync(chatId, msgSend, update, cancellationToken);
     }
 
