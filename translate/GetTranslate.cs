@@ -2,13 +2,20 @@ namespace translate.Translate
 {
     public class GetTranslate
     {
+        public string url { get; set; }
+
+        public GetTranslate()
+        {
+            this.url = "https://libretranslate.pussthecat.org";
+        }
+
         protected async Task<string> GetTranslateAsync(string texto, string IdiomaOrigem, string IdiomaDestino)
         {
             var client = new HttpClient();
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri("https://libretranslate.de/translate"),
+                RequestUri = new Uri($"{url}/translate"),
                 Headers =
     {
         { "user-agent", "vscode-restclient" },
@@ -36,7 +43,7 @@ namespace translate.Translate
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri("https://libretranslate.de/detect"),
+                RequestUri = new Uri($"{url}/detect"),
                 Headers =
     {
         { "user-agent", "vscode-restclient" },
@@ -62,7 +69,7 @@ namespace translate.Translate
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://libretranslate.de/languages"),
+                RequestUri = new Uri($"{url}/languages"),
                 Headers =
     {
         { "user-agent", "vscode-restclient" },
