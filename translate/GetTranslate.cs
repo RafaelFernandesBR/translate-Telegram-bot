@@ -6,7 +6,7 @@ namespace translate.Translate
 
         public GetTranslate()
         {
-            this.url = "https://libretranslate.pussthecat.org";
+            this.url = "https://libretranslate.de";
         }
 
         protected async Task<string> GetTranslateAsync(string texto, string IdiomaOrigem, string IdiomaDestino)
@@ -31,9 +31,15 @@ namespace translate.Translate
             };
             using (var response = await client.SendAsync(request))
             {
-                response.EnsureSuccessStatusCode();
-                var body = await response.Content.ReadAsStringAsync();
-                return body;
+                if (response.IsSuccessStatusCode)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    return body;
+                }
+                else
+                {
+                    return "erro";
+                }
             }
         }
 
@@ -56,10 +62,15 @@ namespace translate.Translate
             };
             using (var response = await client.SendAsync(request))
             {
-                response.EnsureSuccessStatusCode();
-                var body = await response.Content.ReadAsStringAsync();
-
-                return body;
+                if (response.IsSuccessStatusCode)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    return body;
+                }
+                else
+                {
+                    return "erro";
+                }
             }
         }
 
@@ -78,10 +89,15 @@ namespace translate.Translate
             };
             using (var response = await client.SendAsync(request))
             {
-                response.EnsureSuccessStatusCode();
-                var body = await response.Content.ReadAsStringAsync();
-
-                return body;
+                if (response.IsSuccessStatusCode)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    return body;
+                }
+                else
+                {
+                    return "erro";
+                }
             }
         }
 

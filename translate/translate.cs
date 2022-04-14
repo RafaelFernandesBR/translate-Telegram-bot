@@ -9,9 +9,16 @@ namespace translate.Translate
         {
             string tradusido = null;
             string tradusir = await GetTranslateAsync(texto, IdiomaOrigem, IdiomaDestino);
-            var obj = JObject.Parse(tradusir);
+            if (tradusir == "erro")
+            {
+                tradusido = "Erro, tente novamente";
+            }
+            else
+            {
+                var obj = JObject.Parse(tradusir);
 
-            tradusido = Convert.ToString(obj["translatedText"]);
+                tradusido = Convert.ToString(obj["translatedText"]);
+            }
             return tradusido;
         }
 
@@ -29,13 +36,20 @@ namespace translate.Translate
         public async Task<string> AllLanguagesAsync()
         {
             string todos = null;
-
             string detectar = await GetAllAsync();
-            var obj = JArray.Parse(detectar);
 
-            foreach (var item in obj)
+            if (detectar == "erro")
             {
-                todos += Convert.ToString(item["name"]) + " " + Convert.ToString(item["code"]) + "\n";
+                todos = "Erro, tente novamente";
+            }
+            else
+            {
+                var obj = JArray.Parse(detectar);
+
+                foreach (var item in obj)
+                {
+                    todos += Convert.ToString(item["name"]) + " " + Convert.ToString(item["code"]) + "\n";
+                }
             }
 
             return todos;
