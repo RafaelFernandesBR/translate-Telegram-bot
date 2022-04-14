@@ -92,6 +92,22 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
         await MsgSendAsync(chatId, msgSend, update, cancellationToken);
     }
 
+    else if (messageText == "/meu")
+    {
+        string[] dados = verifica.Verificar(Convert.ToString(chatId));
+
+        if (dados == null)
+        {
+            string msgSend = "Você ainda não definiu seu idioma de origem e destino, use o comando /start para defini-los.\nOu defina manualmente com o comando /trocar e os idiomas que quiser.";
+            await MsgSendAsync(chatId, msgSend, update, cancellationToken);
+        }
+        else
+        {
+            string msgSend = $"O seu idioma de origem salvo atualmente é {dados[0]}\nE o de destino é {dados[1]}";
+            await MsgSendAsync(chatId, msgSend, update, cancellationToken);
+        }
+    }
+
     else if (messageText == "/todos")
     {
         var msgSend = await fin.AllLanguagesAsync();
