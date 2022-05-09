@@ -13,7 +13,7 @@ string readFile = r.ReadToEnd();
 TelegramTokem telegramTokem = JsonConvert.DeserializeObject<TelegramTokem>(readFile);
 
 var botClient = new TelegramBotClient(telegramTokem.tokem);
-var fin = new Translate();
+var Translate = new Translate();
 var verifica = new DatabaseConect();
 
 using var cts = new CancellationTokenSource();
@@ -70,7 +70,7 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
 
         string msgSend = "Olá @" + Username + " Bem vindo ao bot de tradução, apenas mande um texto que irei tentar tradusir para o português.\nCom o comando /todos você consegue visualizar todos os idiomas suportado pelo bot.\nO idioma padrão selecionado para novos usuários é origem pt e destino en.";
         await MsgSendAsync(chatId, msgSend, update, cancellationToken);
-        await MsgSendAsync(chatId, "Com o comando /trocar, você muda os seus idiomas padrões\nPor exemplo, para mudar origem e destino para espanhol e inglês, ficaria assin:\n/trocar es en\nLembre-se de colocar espassos, ezatamente como está.", update, cancellationToken);
+        await MsgSendAsync(chatId, "Com o comando /trocar, você muda os seus idiomas padrões\nPor exemplo, para mudar origem e destino para espanhol e inglês, ficaria assin:\n/trocar es en\nLembre-se de colocar espassos, ezatamente como está.\nCom o comando /ale, você pode gerar um idioma de destino aleatóriamente para seu chat.", update, cancellationToken);
     }
 
     else if (messageText.Contains("/trocar", StringComparison.OrdinalIgnoreCase))
@@ -92,6 +92,28 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
         await MsgSendAsync(chatId, msgSend, update, cancellationToken);
     }
 
+    else if (messageText == "/ale")
+    {
+        string[] dados = verifica.Verificar(Convert.ToString(chatId));
+
+        if (dados == null)
+        {
+            string msgSend = "Você ainda não definiu seu idioma de origem e destino, use o comando /start para defini-los.\nOu defina manualmente com o comando /trocar e os idiomas que quiser.";
+            await MsgSendAsync(chatId, msgSend, update, cancellationToken);
+        }
+        else
+        {
+            string[] idiomas = await Translate.RandomAsync();
+            //gerar um número aleatório de no máximo o tamanho do array
+            int aleatorio = new Random().Next(0, idiomas.Length);
+            //Obter o idioma de origem e atualizar com o de destino
+            string[] atualizado = atualizado = verifica.Atualizar(chatId.ToString(), dados[0], idiomas[aleatorio]);
+
+            string msgSend = $"O idioma aleatório gerado foi: {atualizado[1]}\nJá iremos atualizar o seu idioma destino.";
+            await MsgSendAsync(chatId, msgSend, update, cancellationToken);
+        }
+    }
+
     else if (messageText == "/meu")
     {
         string[] dados = verifica.Verificar(Convert.ToString(chatId));
@@ -110,7 +132,7 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
 
     else if (messageText == "/todos")
     {
-        var msgSend = await fin.AllLanguagesAsync();
+        var msgSend = await Translate.AllLanguagesAsync();
 
         await MsgSendAsync(chatId, msgSend, update, cancellationToken);
     }
@@ -126,7 +148,7 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
         }
         else
         {
-            string msgSend = await fin.TranslateTextAsync(messageText, dados[0], dados[1]);
+            string msgSend = await Translate.TranslateTextAsync(messageText, dados[0], dados[1]);
             await MsgSendAsync(chatId, msgSend, update, cancellationToken);
         }
     }

@@ -55,5 +55,27 @@ namespace translate.Translate
             return todos;
         }
 
+        public async Task<string[]> RandomAsync()
+        {
+            string[] todos = new string[28];
+            string detectar = await GetAllAsync();
+
+            if (detectar == "erro")
+            {
+                todos[0] = "Erro, tente novamente";
+            }
+            else
+            {
+                var obj = JArray.Parse(detectar);
+
+                for (var i = 0; i <= 27; i++)
+                {
+                    todos[i] = Convert.ToString(obj[i]["code"]);
+                }
+            }
+
+            return todos;
+        }
+
     }
 }
