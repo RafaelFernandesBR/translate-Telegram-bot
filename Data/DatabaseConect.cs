@@ -7,8 +7,10 @@ namespace Data.Conect
     {
         private MySqlConnection conm { get; set; }
 
+        public string ChatId { get; set; }
         public string idioma_selecionado_origem { get; set; }
         public string idioma_selecionado_destino { get; set; }
+        public string admin { get; set; }
 
         public DatabaseConect()
         {
@@ -34,7 +36,9 @@ namespace Data.Conect
                 {
                     //get a data em mysql
                     idioma_selecionado_origem = Convert.ToString(reader["idioma_selecionado_origem"]),
-                    idioma_selecionado_destino = Convert.ToString(reader["idioma_selecionado_destino"])
+                    idioma_selecionado_destino = Convert.ToString(reader["idioma_selecionado_destino"]),
+                    ChatId = Convert.ToString(reader["chat_id"]),
+                    admin = Convert.ToString(reader["admin"])
                 });
             }
             reader.Close();
@@ -58,10 +62,11 @@ namespace Data.Conect
 
             if (check.Count > 0)
             {
-                OrigemDestino = new string[2];
+                OrigemDestino = new string[3];
 
                 OrigemDestino[0] = check[0].idioma_selecionado_origem;
                 OrigemDestino[1] = check[0].idioma_selecionado_destino;
+                OrigemDestino[2] = check[0].admin;
             }
 
             return OrigemDestino;
@@ -94,6 +99,26 @@ namespace Data.Conect
             }
 
             return NovoOrigemDestino;
+        }
+
+        public async Task<string[]> GetUsersAsync()
+        {
+            var check = ObterInfo("SELECT * FROM usuarios");
+            //salvar dados em array
+            string[] AllUser = null;
+
+            if (check.Count > 0)
+            {
+                //obter o tamanho do check
+                AllUser = new string[check.Count];
+
+                for (int i = 0; i < check.Count; i++)
+                {
+                    AllUser[i] = check[i].ChatId;
+                }
+            }
+
+            return AllUser;
         }
 
     }

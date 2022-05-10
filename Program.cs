@@ -73,6 +73,36 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
         await MsgSendAsync(chatId, "Com o comando /trocar, você muda os seus idiomas padrões\nPor exemplo, para mudar origem e destino para espanhol e inglês, ficaria assin:\n/trocar es en\nLembre-se de colocar espassos, ezatamente como está.\nCom o comando /ale, você pode gerar um idioma de destino aleatóriamente para seu chat.", update, cancellationToken);
     }
 
+    if (messageText.Contains("/admmsg", StringComparison.OrdinalIgnoreCase))
+    {
+        string[] dados = verifica.Verificar(Convert.ToString(chatId));
+        //remover o comando da menssagem
+        var texto = messageText.Split("/admmsg ");
+
+        if (dados == null)
+        {
+            string msgSend = "Você ainda não definiu seu idioma de origem e destino, ou esse comando não é permitido para seu usuário. use o comando /start para defini-los.\nOu defina manualmente com o comando /trocar e os idiomas que quiser.";
+            await MsgSendAsync(chatId, msgSend, update, cancellationToken);
+        }
+        else
+        {
+            if (dados[2] == "True")
+            {
+                string[] AllChatId = await verifica.GetUsersAsync();
+
+                for (var i = 0; i < AllChatId.Length; i++)
+                {
+                    string msgSend = texto[1];
+
+                    Message sentMessage = await botClient.SendTextMessageAsync(
+chatId: AllChatId[i],
+text: msgSend,
+cancellationToken: cancellationToken);
+                }
+            }
+        }
+    }
+
     else if (messageText.Contains("/trocar", StringComparison.OrdinalIgnoreCase))
     {
         //separar a menssagem por espassos
