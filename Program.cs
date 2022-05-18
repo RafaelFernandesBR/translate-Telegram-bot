@@ -4,17 +4,18 @@ using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Newtonsoft.Json;
-using translate.Translate;
 using telegram.tokem;
 using Data.Conect;
+using translate.Balancer;
+using translate.Translate;
 
 StreamReader r = new StreamReader("telegram.json");
 string readFile = r.ReadToEnd();
 TelegramTokem telegramTokem = JsonConvert.DeserializeObject<TelegramTokem>(readFile);
 
 var botClient = new TelegramBotClient(telegramTokem.tokem);
-var Translate = new Translate();
 var verifica = new DatabaseConect();
+Balancer Balancer = new Balancer();
 
 using var cts = new CancellationTokenSource();
 
@@ -133,6 +134,8 @@ cancellationToken: cancellationToken);
         }
         else
         {
+            var Translate = new TranslateLibretranslate();
+
             string[] idiomas = await Translate.RandomAsync();
             //gerar um número aleatório de no máximo o tamanho do array
             int aleatorio = new Random().Next(0, idiomas.Length);
@@ -162,6 +165,8 @@ cancellationToken: cancellationToken);
 
     else if (messageText == "/todos")
     {
+        var Translate = new TranslateLibretranslate();
+
         var msgSend = await Translate.AllLanguagesAsync();
 
         await MsgSendAsync(chatId, msgSend, update, cancellationToken);
@@ -178,7 +183,7 @@ cancellationToken: cancellationToken);
         }
         else
         {
-            string msgSend = await Translate.TranslateTextAsync(messageText, dados[0], dados[1]);
+            string msgSend = await Balancer.TranslateTextAsync(messageText, dados[0], dados[1]);
             await MsgSendAsync(chatId, msgSend, update, cancellationToken);
         }
     }
