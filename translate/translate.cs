@@ -2,7 +2,7 @@ using Newtonsoft.Json.Linq;
 
 namespace translate.Translate
 {
-    public class Translate : GetTranslate
+    public class TranslateLibretranslate : GetTranslate
     {
 
         public async Task<string> TranslateTextAsync(string texto, string IdiomaOrigem, string IdiomaDestino)
