@@ -19,12 +19,12 @@ namespace translate.Balancer
             else
             {
                 var Translate = new TranslateLibretranslate();
+                
                 Tradusido = await Translate.TranslateTextAsync(texto, IdiomaOrigem, IdiomaDestino);
             }
 
             return Tradusido;
         }
-
 
     }
 }
