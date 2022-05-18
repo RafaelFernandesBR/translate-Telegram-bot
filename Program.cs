@@ -90,10 +90,12 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
             if (dados[2] == "True")
             {
                 string[] AllChatId = await verifica.GetUsersAsync();
+            await MsgSendAsync(chatId, "Pronto!", update, cancellationToken);
 
                 for (var i = 0; i < AllChatId.Length; i++)
                 {
                     string msgSend = texto[1];
+                    Console.WriteLine("Send msg for\n" + AllChatId[i]);
 
                     Message sentMessage = await botClient.SendTextMessageAsync(
 chatId: AllChatId[i],
