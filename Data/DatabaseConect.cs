@@ -1,5 +1,5 @@
 using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
+using Conect.data;
 
 namespace Data.Conect
 {
@@ -14,12 +14,10 @@ namespace Data.Conect
 
         public DatabaseConect()
         {
-            //get a file json
-            StreamReader r = new StreamReader("telegram.json");
-            string readFile = r.ReadToEnd();
-            conectSql conectData = JsonConvert.DeserializeObject<conectSql>(readFile);
+            Getdata Getdata = new Getdata();
+            var dadosConect = Getdata.GetdataAll();
 
-            this.conm = new MySqlConnection("Server=" + conectData.server + ";Database=" + conectData.Database + ";Uid=" + conectData.user + ";Pwd=" + conectData.senha + ";SSL Mode=None");
+            this.conm = new MySqlConnection($"Server={dadosConect.mysql.Server};Database={dadosConect.mysql.Database};Uid={dadosConect.mysql.user};Pwd={dadosConect.mysql.senha};SSL Mode=None");
         }
 
         private List<DatabaseConect> ObterInfo(string query)

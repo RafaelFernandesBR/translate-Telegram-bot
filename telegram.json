@@ -1,7 +1,11 @@
 {
-    "tokem": "TokemBot",
-    "Server": "localhost",
-    "Database": "BancoDeDados",
-    "user": "UsuarioBanco",
-    "senha": "SenhaBanco"
+    "mysql": {
+        "Server": "localhost",
+        "Database": "DataBase",
+        "user": "User",
+        "senha": "PWD"
+    },
+    "telegram": {
+        "tokem": "TokemBot"
+    }
 }

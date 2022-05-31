@@ -4,16 +4,15 @@ using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Newtonsoft.Json;
-using telegram.tokem;
 using Data.Conect;
 using translate.Balancer;
 using translate.Translate;
+using Conect.data;
 
-StreamReader r = new StreamReader("telegram.json");
-string readFile = r.ReadToEnd();
-TelegramTokem telegramTokem = JsonConvert.DeserializeObject<TelegramTokem>(readFile);
+Getdata Getdata = new Getdata();
+var dadosConect = Getdata.GetdataAll();
 
-var botClient = new TelegramBotClient(telegramTokem.tokem);
+var botClient = new TelegramBotClient(dadosConect.telegram.tokem);
 var verifica = new DatabaseConect();
 Balancer Balancer = new Balancer();
 
@@ -90,7 +89,7 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
             if (dados[2] == "True")
             {
                 string[] AllChatId = await verifica.GetUsersAsync();
-            await MsgSendAsync(chatId, "Pronto!", update, cancellationToken);
+                await MsgSendAsync(chatId, "Pronto!", update, cancellationToken);
 
                 for (var i = 0; i < AllChatId.Length; i++)
                 {
