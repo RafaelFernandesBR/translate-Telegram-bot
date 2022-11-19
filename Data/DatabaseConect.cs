@@ -1,5 +1,5 @@
-using MySql.Data.MySqlClient;
 using Conect.data;
+using MySql.Data.MySqlClient;
 
 namespace Data.Conect
 {

@@ -6,8 +6,10 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["translateBot.csproj", "."]
-COPY ["TranslateGoogle/TranslateGoogle.csproj", "TranslateGoogle/"]
+COPY ["TranslateGoogle/TranslateGoogle.csproj", "./TranslateGoogle"]
 RUN dotnet restore "./translateBot.csproj"
+RUN dotnet restore "./TranslateGoogle/TranslateGoogle.csproj"
+
 COPY . .
 WORKDIR "/src/."
 RUN dotnet build "translateBot.csproj" -c Release -o /app/build

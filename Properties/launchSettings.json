@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "translateBot": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

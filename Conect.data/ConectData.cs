@@ -1,4 +1,5 @@
-namespace Conect.data{ 
+namespace Conect.data
+{
 
     public class ConectData
     {

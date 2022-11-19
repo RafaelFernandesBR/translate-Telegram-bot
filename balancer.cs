@@ -1,4 +1,3 @@
-using translate.Translate;
 using Translate.Google;
 
 namespace translate.Balancer
@@ -10,18 +9,8 @@ namespace translate.Balancer
         {
             string Tradusido = null;
 
-            if (texto.Length >= 250)
-            {
-                var google = new TranslateGoogle();
-
-                Tradusido = await google.TranslateTextAsync(texto, IdiomaOrigem, IdiomaDestino);
-            }
-            else
-            {
-                var Translate = new TranslateLibretranslate();
-                
-                Tradusido = await Translate.TranslateTextAsync(texto, IdiomaOrigem, IdiomaDestino);
-            }
+            var translate = new TranslateGoogle();
+            Tradusido = await translate.TranslateTextAsync(texto, IdiomaOrigem, IdiomaDestino);
 
             return Tradusido;
         }

@@ -1,22 +1,24 @@
-﻿using Telegram.Bot;
+﻿using Conect.data;
+using Data.Conect;
+using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using Data.Conect;
 using translate.Balancer;
 using translate.Translate;
-using Conect.data;
 
-internal class Program
+public class Program
 {
     private static async Task Main(string[] args)
     {
+
         Getdata Getdata = new Getdata();
         var dadosConect = Getdata.GetdataAll();
 
         var botClient = new TelegramBotClient(dadosConect.telegram.tokem);
         var verifica = new DatabaseConect();
+
         Balancer Balancer = new Balancer();
 
         using var cts = new CancellationTokenSource();
