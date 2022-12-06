@@ -1,5 +1,9 @@
 using Conect.data;
 using MySql.Data.MySqlClient;
+using System.Data;
+using Telegram.Bot.Types;
+using Dapper;
+using System.Linq;
 
 namespace Data.Conect
 {
@@ -20,36 +24,21 @@ namespace Data.Conect
             this.conm = new MySqlConnection($"Server={dadosConect.mysql.Server};Database={dadosConect.mysql.Database};Uid={dadosConect.mysql.user};Pwd={dadosConect.mysql.senha};SSL Mode=None");
         }
 
-        private List<DatabaseConect> ObterInfo(string query)
+        private IEnumerable<DatabaseConect> ObterInfo(string query)
         {
-            List<DatabaseConect> data = new List<DatabaseConect>();
-
-            this.conm.Open();
-            MySqlCommand cmd = new MySqlCommand(query, this.conm);
-            MySqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
+            using (IDbConnection connectiontst = conm)
             {
-                data.Add(new DatabaseConect
-                {
-                    //get a data em mysql
-                    idioma_selecionado_origem = Convert.ToString(reader["idioma_selecionado_origem"]),
-                    idioma_selecionado_destino = Convert.ToString(reader["idioma_selecionado_destino"]),
-                    ChatId = Convert.ToString(reader["chat_id"]),
-                    admin = Convert.ToString(reader["admin"])
-                });
+                var cost = connectiontst.Query<DatabaseConect>(query);
+                return cost;
             }
-            reader.Close();
-            this.conm.Close();
-            return data;
         }
 
         private void DeletInsert(string query)
         {
-            this.conm.Open();
-            MySqlCommand cmd = new MySqlCommand(query, this.conm);
-            cmd.ExecuteNonQuery();
-            this.conm.Close();
+            using (IDbConnection connectiontst = conm)
+            {
+                connectiontst.QueryAsync(query);
+            }
         }
 
         public string[] Verificar(string chatId)
@@ -58,13 +47,16 @@ namespace Data.Conect
             //salvar idioma origem e destino em array
             string[] OrigemDestino = null;
 
-            if (check.Count > 0)
+            if (check != null)
             {
-                OrigemDestino = new string[3];
+                foreach (var d in check)
+                {
+                    OrigemDestino = new string[3];
 
-                OrigemDestino[0] = check[0].idioma_selecionado_origem;
-                OrigemDestino[1] = check[0].idioma_selecionado_destino;
-                OrigemDestino[2] = check[0].admin;
+                    OrigemDestino[0] = d.idioma_selecionado_origem;
+                    OrigemDestino[1] = d.idioma_selecionado_destino;
+                    OrigemDestino[2] = d.admin;
+                }
             }
 
             return OrigemDestino;
@@ -74,10 +66,11 @@ namespace Data.Conect
         {
             var check = ObterInfo($"SELECT * FROM usuarios WHERE chat_id = '{chatId}';");
 
-            if (check.Count <= 0)
+            if (check.Count() == 0)
             {
                 DeletInsert($"INSERT INTO usuarios(chat_id) VALUES('{chatId}');");
             }
+
         }
 
         public string[] Atualizar(string chatId, string idiomaOrigem, string idiomaDestino)
@@ -88,12 +81,15 @@ namespace Data.Conect
             //salvar idioma origem e destino em array
             string[] NovoOrigemDestino = null;
 
-            if (check.Count > 0)
+            if (check.Count() != 0)
             {
-                NovoOrigemDestino = new string[2];
+                foreach (var d in check)
+                {
+                    NovoOrigemDestino = new string[2];
 
-                NovoOrigemDestino[0] = check[0].idioma_selecionado_origem;
-                NovoOrigemDestino[1] = check[0].idioma_selecionado_destino;
+                    NovoOrigemDestino[0] = d.idioma_selecionado_origem;
+                    NovoOrigemDestino[1] = d.idioma_selecionado_destino;
+                }
             }
 
             return NovoOrigemDestino;
@@ -105,17 +101,17 @@ namespace Data.Conect
             //salvar dados em array
             string[] AllUser = null;
 
-            if (check.Count > 0)
+            if (check != null)
             {
-                //obter o tamanho do check
-                AllUser = new string[check.Count];
+                List<string> intermediate_list = new List<string>();
 
-                for (int i = 0; i < check.Count; i++)
+                foreach (var d in check)
                 {
-                    AllUser[i] = check[i].ChatId;
+                    intermediate_list.Add(d.ChatId);
                 }
-            }
 
+                AllUser = intermediate_list.ToArray();
+            }
             return AllUser;
         }
 

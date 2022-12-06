@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "translateBot", "translateBo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranslateGoogle", "TranslateGoogle\TranslateGoogle.csproj", "{1F2A35D3-2709-45EE-81BE-180F738D04F1}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E68D226C-35E4-4765-B5EA-288B54EF0135}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{1F2A35D3-2709-45EE-81BE-180F738D04F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F2A35D3-2709-45EE-81BE-180F738D04F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F2A35D3-2709-45EE-81BE-180F738D04F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E68D226C-35E4-4765-B5EA-288B54EF0135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E68D226C-35E4-4765-B5EA-288B54EF0135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E68D226C-35E4-4765-B5EA-288B54EF0135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E68D226C-35E4-4765-B5EA-288B54EF0135}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
