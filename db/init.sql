@@ -1,0 +1,1 @@
+CREATE TABLE usuarios (id INT auto_increment PRIMARY KEY, chat_id text, idioma_selecionado_origem VARCHAR(2) DEFAULT 'en', idioma_selecionado_destino VARCHAR(2) DEFAULT 'pt'), admin boolean not null default 0;
