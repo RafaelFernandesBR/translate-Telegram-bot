@@ -15,8 +15,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0
 COPY --from=build-env /app/out .
 
 # setar as variaveis de ambiente
-ENV tokem=1820018763:AAHTTC5m_AvjaGoo8_sinIfTZ0HHRW3HK2c
-ENV opemAItokem=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
+ENV tokem=tokembot
 
 # iniciar a aplicação
-ENTRYPOINT ["dotnet", "opemainet.dll"]
+ENTRYPOINT ["dotnet", "Translate.dll"]
