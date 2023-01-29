@@ -1,15 +1,6 @@
 version: '3.4'
 
 services:
-  translatebot:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    networks:
-      - tral
-    depends_on:
-      - database
-
   database:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
@@ -24,7 +15,7 @@ services:
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
       # <Port exposed> : < MySQL Port running inside container>
-      - '3307:3306'
+      - '3306:3306'
 
       # Where our data will be persisted
     volumes:

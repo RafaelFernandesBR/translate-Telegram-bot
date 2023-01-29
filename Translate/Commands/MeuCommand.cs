@@ -1,0 +1,28 @@
+﻿using Data.Conect;
+using System.Threading;
+using Telegram.Bot;
+
+namespace TranslateBot.Commands;
+public class MeuCommand : ICommandBot
+{
+    public string Nome => "/meu";
+
+    public async void Executar(ITelegramBotClient botClient, long chatId, string? msg = null)
+    {
+        var databaseconect = new DatabaseConect(LoggerConfig.CreateLogger());
+        var dados = await databaseconect.Verificar(Convert.ToString(chatId));
+
+        string msgSend;
+        if (dados.Count() == 0)
+        {
+            msgSend = "Você ainda não definiu seu idioma de origem e destino, use o comando /start para defini-los.\nOu defina manualmente com o comando /trocar e os idiomas que quiser.";
+        }
+        else
+        {
+            msgSend = $"O seu idioma de origem salvo atualmente é {dados.First().idioma_selecionado_origem}\nE o de destino é {dados.First().idioma_selecionado_destino}";
+        }
+
+        botClient.SendTextMessageAsync(chatId, msgSend);
+    }
+
+}
