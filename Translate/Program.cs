@@ -1,11 +1,12 @@
-﻿using Control;
+﻿using Conect.data;
+using Control;
 
 namespace TranslateBot;
 public class Program
 {
     private static async Task Main(string[] args)
     {
-        var bot = new Bot(Environment.GetEnvironmentVariable("tokem"), LoggerConfig.CreateLogger());
+        var bot = new Bot(Getdata.Instance.ConectData.telegram.tokem, LoggerConfig.CreateLogger());
         bot.Start();
 
         // Handle application shutdown

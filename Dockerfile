@@ -14,8 +14,5 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0
 # copiando o binario gerado para o container
 COPY --from=build-env /app/out .
 
-# setar as variaveis de ambiente
-ENV tokem=tokembot
-
 # iniciar a aplicação
 ENTRYPOINT ["dotnet", "Translate.dll"]

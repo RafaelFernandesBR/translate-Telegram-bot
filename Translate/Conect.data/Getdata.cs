@@ -3,14 +3,30 @@ using Newtonsoft.Json;
 namespace Conect.data;
 public class Getdata
 {
+    private static Getdata _instance;
+    private ConectData _conectData;
 
-    public Conect.data.ConectData GetdataAll()
+    private Getdata()
     {
         StreamReader r = new StreamReader("telegram.json");
         string readFile = r.ReadToEnd();
-        //converter json em método csharp
-        var json = JsonConvert.DeserializeObject<ConectData>(readFile);
-        return json;
+        _conectData = JsonConvert.DeserializeObject<ConectData>(readFile);
     }
 
+    public static Getdata Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new Getdata();
+            }
+            return _instance;
+        }
+    }
+
+    public ConectData ConectData
+    {
+        get { return _conectData; }
+    }
 }
