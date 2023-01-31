@@ -17,7 +17,7 @@ public class Getdata
             },
             telegram = new Telegram
             {
-                tokem = Environment.GetEnvironmentVariable("TELEGRAMTOKEN")
+                tokem = Environment.GetEnvironmentVariable("tokem")
             }
         };
     }

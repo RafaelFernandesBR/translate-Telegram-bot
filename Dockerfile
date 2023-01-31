@@ -11,14 +11,14 @@ RUN dotnet publish -c Release -o out
 # build da aplicação
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 # args das variáveis de ambientes
-ARG tokem
+ARG tokemBot
 
 # copiando o binario gerado para o container
 COPY --from=build-env /app/out .
 
 # setar as variaveis de ambiente
-ENV tokem=$tokem
-ENV MYSQLSERVER=localhost
+ENV tokem=$tokemBot
+ENV MYSQLSERVER=translatebotbase
 ENV MYSQLDATABASE=db
 ENV MYSQLUSER=user
 ENV MYSQLPASSWORD=password
