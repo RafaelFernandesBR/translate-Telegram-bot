@@ -6,7 +6,8 @@ public class Program
 {
     private static async Task Main(string[] args)
     {
-        var bot = new Bot(Getdata.Instance.ConectData.telegram.tokem, LoggerConfig.CreateLogger());
+        var bot = new Bot(Getdata.Instance.GetConectData().telegram.tokem,
+            LoggerConfig.CreateLogger());
         bot.Start();
 
         // Handle application shutdown

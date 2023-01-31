@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-
 namespace Conect.data;
 public class Getdata
 {
@@ -8,9 +6,20 @@ public class Getdata
 
     private Getdata()
     {
-        StreamReader r = new StreamReader("telegram.json");
-        string readFile = r.ReadToEnd();
-        _conectData = JsonConvert.DeserializeObject<ConectData>(readFile);
+        _conectData = new ConectData
+        {
+            mysql = new Mysql
+            {
+                Server = Environment.GetEnvironmentVariable("MYSQLSERVER"),
+                Database = Environment.GetEnvironmentVariable("MYSQLDATABASE"),
+                user = Environment.GetEnvironmentVariable("MYSQLUSER"),
+                senha = Environment.GetEnvironmentVariable("MYSQLPASSWORD")
+            },
+            telegram = new Telegram
+            {
+                tokem = Environment.GetEnvironmentVariable("TELEGRAMTOKEN")
+            }
+        };
     }
 
     public static Getdata Instance
@@ -25,8 +34,8 @@ public class Getdata
         }
     }
 
-    public ConectData ConectData
+    public ConectData GetConectData()
     {
-        get { return _conectData; }
+        return _conectData;
     }
 }

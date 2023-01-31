@@ -12,7 +12,7 @@ public class DatabaseConect
 
     public DatabaseConect(ILogger logger)
     {
-        var dadosConect = Getdata.Instance.ConectData.mysql;
+        var dadosConect = Getdata.Instance.GetConectData().mysql;
 
         this.conm = new MySqlConnection($"Server={dadosConect.Server};Database={dadosConect.Database};Uid={dadosConect.user};Pwd={dadosConect.senha};SSL Mode=None");
         _logger = logger;

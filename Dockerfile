@@ -10,9 +10,14 @@ RUN dotnet publish -c Release -o out
 
 # build da aplicação
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
+# args das variáveis de ambientes
+ARG tokem
 
 # copiando o binario gerado para o container
 COPY --from=build-env /app/out .
+
+# setar as variaveis de ambiente
+ENV tokem=$tokem
 
 # iniciar a aplicação
 ENTRYPOINT ["dotnet", "Translate.dll"]
