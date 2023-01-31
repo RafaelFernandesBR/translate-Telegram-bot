@@ -36,6 +36,7 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
         script: |
             cd ./repo/translate-Telegram-bot/
-            docker-compose build --build-arg tokemBot=${ secrets.tokem }
+            docker-compose down
+            docker-compose build --build-arg tokemBot=${{ secrets.tokem }}
             docker-compose up -d
             docker logs translatebot
