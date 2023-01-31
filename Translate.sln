@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{B34474A6-E61A-4AEF-89EC-499888CC3B28}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\deploy.yml = .github\workflows\deploy.yml
+		docker-compose-dev.yaml = docker-compose-dev.yaml
 		docker-compose.yaml = docker-compose.yaml
 		dockerfile = dockerfile
 	EndProjectSection

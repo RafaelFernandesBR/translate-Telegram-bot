@@ -20,7 +20,8 @@ public class MessageHandler
         {
             new StartCommand(),
             new TrocarCommand(),
-            new MeuCommand()
+            new MeuCommand(),
+            new TodosCommand()
         };
 
         _logger = logger;
