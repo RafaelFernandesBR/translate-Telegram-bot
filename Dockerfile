@@ -18,6 +18,10 @@ COPY --from=build-env /app/out .
 
 # setar as variaveis de ambiente
 ENV tokem=$tokem
+ENV MYSQLSERVER=localhost
+ENV MYSQLDATABASE=db
+ENV MYSQLUSER=user
+ENV MYSQLPASSWORD=password
 
 # iniciar a aplicação
 ENTRYPOINT ["dotnet", "Translate.dll"]
