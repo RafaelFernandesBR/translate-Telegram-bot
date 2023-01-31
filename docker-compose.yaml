@@ -6,7 +6,7 @@ services:
     container_name: translatebot
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
       args:
         tokemBot: ${TOKEN}
     networks:
@@ -31,7 +31,7 @@ services:
       # Where our data will be persisted
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./db/bacup:/var/lib/mysql/ # Backup folder in host mapped to backup 
+      - /root/repo/bacupTranslate/:/var/lib/mysql/ # Backup folder in host mapped to backup 
     networks:
       - tral
 

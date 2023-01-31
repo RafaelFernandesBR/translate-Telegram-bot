@@ -3,10 +3,10 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
  
 jobs:
   build:
@@ -16,6 +16,17 @@ jobs:
     steps:
     - uses: actions/checkout@v1
  
+    - name: Copy repository contents via scp
+      uses: appleboy/scp-action@master
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+      with:
+        source: "."
+        target: "/root/repo/translate-Telegram-bot"
+ 
     - name: Executing remote command
       uses: appleboy/ssh-action@master
       with:
@@ -24,10 +35,7 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
         script: |
-            cd ./repo/opemainet/
-            git pull origin master
-            docker stop tbotnet
-            docker rm tbotnet
-            docker build -t tbotnetimg .
-            docker run --name tbotnet --restart=on-failure -d tbotnetimg
-            docker logs tbotnet
+            cd ./repo/translate-Telegram-bot/
+            docker-compose build --build-arg tokemBot=${ secrets.tokem }
+            docker-compose up -d
+            docker logs translatebot
