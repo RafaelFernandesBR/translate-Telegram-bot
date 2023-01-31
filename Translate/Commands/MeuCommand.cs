@@ -1,13 +1,14 @@
 ﻿using Data.Conect;
 using System.Threading;
 using Telegram.Bot;
+using Telegram.Bot.Types;
 
 namespace TranslateBot.Commands;
 public class MeuCommand : ICommandBot
 {
     public string Nome => "/meu";
 
-    public async void Executar(ITelegramBotClient botClient, long chatId, string? msg = null)
+    public async void Executar(ITelegramBotClient botClient, long chatId, Update? update=null)
     {
         var databaseconect = new DatabaseConect(LoggerConfig.CreateLogger());
         var dados = await databaseconect.Verificar(Convert.ToString(chatId));

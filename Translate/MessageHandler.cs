@@ -56,7 +56,7 @@ public class MessageHandler
             return;
         }
 
-        command.Executar(botClient, chatId, messageText);
+        command.Executar(botClient, chatId, update);
     }
 
     private async Task SendMessageAsync(long chatId, string text, Telegram.Bot.Types.Update update, ITelegramBotClient botClient)

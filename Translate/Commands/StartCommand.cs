@@ -1,12 +1,13 @@
 ﻿using Data.Conect;
 using Telegram.Bot;
+using Telegram.Bot.Types;
 
 namespace TranslateBot.Commands;
 public class StartCommand : ICommandBot
 {
     public string Nome => "/start";
 
-    public void Executar(ITelegramBotClient botClient, long chatId, string? msg = null)
+    public void Executar(ITelegramBotClient botClient, long chatId, Update? update = null)
     {
         var databaseconect = new DatabaseConect(LoggerConfig.CreateLogger());
         databaseconect.Salvar(Convert.ToString(chatId));
