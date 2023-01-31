@@ -4,6 +4,7 @@ services:
   TranslateBot:
     image: translateimg
     container_name: translatebot
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
