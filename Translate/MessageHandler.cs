@@ -21,7 +21,8 @@ public class MessageHandler
             new StartCommand(),
             new TrocarCommand(),
             new MeuCommand(),
-            new TodosCommand()
+            new TodosCommand(),
+            new AleCommand()
         };
 
         _logger = logger;
@@ -60,7 +61,7 @@ public class MessageHandler
         command.Executar(botClient, chatId, update);
     }
 
-    private async Task SendMessageAsync(long chatId, string text, Telegram.Bot.Types.Update update, ITelegramBotClient botClient)
+    private async Task SendMessageAsync(long chatId, string text, Update update, ITelegramBotClient botClient)
     {
         try
         {
