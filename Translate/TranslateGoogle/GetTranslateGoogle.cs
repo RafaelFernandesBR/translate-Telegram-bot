@@ -1,7 +1,7 @@
 using Serilog;
 
 namespace Translate.Google;
-public class GetTranslateGoogle
+public class GetTranslateGoogle : IGetTranslateGoogle
 {
     private string url { get; set; }
     private readonly ILogger _logger;
@@ -12,7 +12,7 @@ public class GetTranslateGoogle
         _logger = logger;
     }
 
-    public async Task<string?> GetTranslateAsync(string texto, string IdiomaOrigem, string IdiomaDestino)
+    public virtual async Task<string?> GetTranslateAsync(string texto, string IdiomaOrigem, string IdiomaDestino)
     {
         var client = new HttpClient();
         var request = new HttpRequestMessage();
@@ -35,5 +35,4 @@ public class GetTranslateGoogle
             return null;
         }
     }
-
 }

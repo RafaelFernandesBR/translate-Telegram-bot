@@ -1,10 +1,10 @@
-﻿using TranslateBot.Commands;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot;
+﻿using Data.Conect;
 using Serilog;
+using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 using Translate.Google;
-using Data.Conect;
+using TranslateBot.Commands;
 
 namespace Control;
 public class MessageHandler
@@ -27,7 +27,7 @@ public class MessageHandler
 
         _logger = logger;
         _databaseconect = new DatabaseConect(logger);
-        _translategoogle = new TranslateGoogle();
+        _translategoogle = new TranslateGoogle(new GetTranslateGoogle(logger));
     }
 
     public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)

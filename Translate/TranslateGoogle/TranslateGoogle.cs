@@ -1,33 +1,40 @@
-namespace Translate.Google;
-public class TranslateGoogle
+namespace Translate.Google
 {
-
-    public async Task<string?> TranslateTextAsync(string texto, string IdiomaOrigem, string IdiomaDestino)
+    public class TranslateGoogle
     {
-        var gtranslate = new GetTranslateGoogle(LoggerConfig.CreateLogger());
-        var tradusir = await gtranslate.GetTranslateAsync(texto, IdiomaOrigem, IdiomaDestino);
+        private readonly IGetTranslateGoogle _getTranslate;
 
-        if (tradusir != null)
+        public TranslateGoogle(IGetTranslateGoogle getTranslate)
         {
-            string textFin = null;
+            _getTranslate = getTranslate;
+        }
 
-            if (IdiomaOrigem != "auto")
+        public async Task<string?> TranslateTextAsync(string texto, string IdiomaOrigem, string IdiomaDestino)
+        {
+            var tradusir = await _getTranslate.GetTranslateAsync(texto, IdiomaOrigem, IdiomaDestino);
+
+            if (tradusir != null)
             {
-                textFin = tradusir.Substring(2, tradusir.Length - 4);
+                string textFin = null;
+
+                if (IdiomaOrigem != "auto")
+                {
+                    textFin = tradusir.Substring(2, tradusir.Length - 4);
+                }
+                else
+                {
+                    textFin = tradusir.Substring(3, tradusir.Length - 11);
+                }
+                //remover os \\n do texto e adicionar nova linha no lugar
+                textFin = textFin.Replace("\\n", "\n");
+
+                return textFin;
             }
             else
             {
-                textFin = tradusir.Substring(3, tradusir.Length - 11);
+                return null;
             }
-            //remover os \\n do texto e adicionar nova linha no lugar
-            textFin = textFin.Replace("\\n", "\n");
+        }
 
-            return textFin;
-        }
-        else
-        {
-            return null;
-        }
     }
-
 }
