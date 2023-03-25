@@ -1,4 +1,5 @@
 ﻿using Data.Conect;
+using Serilog;
 using System.Threading;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -8,9 +9,9 @@ public class MeuCommand : ICommandBot
 {
     public string Nome => "/meu";
 
-    public async void Executar(ITelegramBotClient botClient, long chatId, Update? update=null)
+    public async void Executar(ITelegramBotClient botClient, ILogger logger, long chatId, Update? update = null)
     {
-        var databaseconect = new DatabaseConect(LoggerConfig.CreateLogger());
+        var databaseconect = new DatabaseConect(logger);
         var dados = await databaseconect.Verificar(Convert.ToString(chatId));
 
         string msgSend;
@@ -23,7 +24,7 @@ public class MeuCommand : ICommandBot
             msgSend = $"O seu idioma de origem salvo atualmente é {dados.First().idioma_selecionado_origem}\nE o de destino é {dados.First().idioma_selecionado_destino}";
         }
 
-       await botClient.SendTextMessageAsync(chatId, msgSend);
+        await botClient.SendTextMessageAsync(chatId, msgSend);
     }
 
 }

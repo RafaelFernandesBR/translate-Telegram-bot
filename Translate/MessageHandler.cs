@@ -1,10 +1,10 @@
-﻿using TranslateBot.Commands;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot;
+﻿using Data.Conect;
 using Serilog;
+using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 using Translate.Google;
-using Data.Conect;
+using TranslateBot.Commands;
 
 namespace Control;
 public class MessageHandler
@@ -46,7 +46,7 @@ public class MessageHandler
             // not a command, handle as normal message
             var dados = await _databaseconect.Verificar(Convert.ToString(chatId));
             var text = await _translategoogle.TranslateTextAsync(messageText, dados.First().idioma_selecionado_origem, dados.First().idioma_selecionado_destino);
-            await SendMessageAsync(chatId, text, update, botClient);
+            await SendMessageAsync(chatId, text!, update, botClient);
             return;
         }
 
@@ -58,7 +58,7 @@ public class MessageHandler
             return;
         }
 
-        command.Executar(botClient, chatId, update);
+        command.Executar(botClient, _logger, chatId, update);
     }
 
     private async Task SendMessageAsync(long chatId, string text, Update update, ITelegramBotClient botClient)

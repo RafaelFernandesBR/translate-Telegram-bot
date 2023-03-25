@@ -1,4 +1,5 @@
 ﻿using Data.Conect;
+using Serilog;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -7,9 +8,9 @@ public class TrocarCommand : ICommandBot
 {
     public string Nome => "/trocar";
 
-    public async void Executar(ITelegramBotClient botClient, long chatId, Update? update = null)
+    public async void Executar(ITelegramBotClient botClient, ILogger logger, long chatId, Update? update = null)
     {
-        var databaseconect = new DatabaseConect(LoggerConfig.CreateLogger());
+        var databaseconect = new DatabaseConect(logger);
         var texto = update.Message.Text.Split(" ");
 
         //se o tamanho do  array for igual a 3
@@ -21,6 +22,7 @@ public class TrocarCommand : ICommandBot
         }
         else
         {
+            logger.Error($"Tamanho do texto é {texto.Length}, e o texto é {update.Message.Text}");
             msgSend = "Comando inválido, verifique e envie novamente.";
         }
 
