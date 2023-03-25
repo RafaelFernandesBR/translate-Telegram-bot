@@ -16,7 +16,7 @@ public class TodosCommand : ICommandBot
             msgSend += idiomasDsp[i] + "\n";
         }
 
-        botClient.SendTextMessageAsync(chatId, msgSend);
+        await botClient.SendTextMessageAsync(chatId, msgSend!);
     }
 
 }

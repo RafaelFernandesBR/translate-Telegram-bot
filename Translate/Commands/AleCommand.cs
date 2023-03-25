@@ -21,7 +21,7 @@ public class AleCommand : ICommandBot
 
 
         string msgSend = $"Idiomas atualizado aleatóriamente.\nIdioma origem como {atualizado.First().idioma_selecionado_origem} e destino como {atualizado.First().idioma_selecionado_destino}";
-        botClient.SendTextMessageAsync(chatId, msgSend);
+        await botClient.SendTextMessageAsync(chatId, msgSend);
     }
 
 }

@@ -7,7 +7,7 @@ public class TrocarCommand : ICommandBot
 {
     public string Nome => "/trocar";
 
-    public void Executar(ITelegramBotClient botClient, long chatId, Update? update = null)
+    public async void Executar(ITelegramBotClient botClient, long chatId, Update? update = null)
     {
         var databaseconect = new DatabaseConect(LoggerConfig.CreateLogger());
         var texto = update.Message.Text.Split(" ");
@@ -24,7 +24,7 @@ public class TrocarCommand : ICommandBot
             msgSend = "Comando inválido, verifique e envie novamente.";
         }
 
-        botClient.SendTextMessageAsync(chatId, msgSend);
+        await botClient.SendTextMessageAsync(chatId, msgSend);
     }
 
 }

@@ -23,7 +23,7 @@ public class MeuCommand : ICommandBot
             msgSend = $"O seu idioma de origem salvo atualmente é {dados.First().idioma_selecionado_origem}\nE o de destino é {dados.First().idioma_selecionado_destino}";
         }
 
-        botClient.SendTextMessageAsync(chatId, msgSend);
+       await botClient.SendTextMessageAsync(chatId, msgSend);
     }
 
 }
