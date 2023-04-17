@@ -11,10 +11,10 @@ public class Bot
     private readonly ILogger _logger;
     private ErrorHandler _ErrorHandler;
 
-    public Bot(string token, ILogger logger)
+    public Bot(TelegramBotClient telegramBotClient, ILogger logger)
     {
         _logger = logger;
-        _botClient = new TelegramBotClient(token);
+        _botClient = telegramBotClient;
         _receiverOptions = new ReceiverOptions
         {
             AllowedUpdates = { }

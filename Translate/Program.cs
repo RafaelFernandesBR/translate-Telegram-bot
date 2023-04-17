@@ -1,14 +1,25 @@
-﻿using Conect.data;
-using Control;
+﻿using Control;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using Telegram.Bot;
 
 namespace TranslateBot;
 public class Program
 {
     private static async Task Main(string[] args)
     {
-        var bot = new Bot(Getdata.Instance.GetConectData().telegram.tokem,
-            LoggerConfig.CreateLogger());
-        bot.Start();
+        using var host = Host.CreateDefaultBuilder(args)
+            .ConfigureServices((builder, services) =>
+            {
+                services.AddSingleton<ILogger>(LoggerConfig.CreateLogger());
+                services.AddSingleton<Bot>(provider =>
+                    new Bot(new TelegramBotClient(Environment.GetEnvironmentVariable("tokem")),
+                            provider.GetService<ILogger>()));
+            })
+            .Build();
+
+        host.Services.GetRequiredService<Bot>().Start();
 
         // Handle application shutdown
         var cancellationTokenSource = new CancellationTokenSource();
