@@ -19,7 +19,7 @@ public class TrocarCommand : ICommandBot
         {
             bool valid = true;
             int id = 0;
-            foreach (var item in texto)
+            foreach (var item in texto.Skip(1))
             {
                 id++;
                 if (item.Length > 2)
@@ -36,7 +36,7 @@ public class TrocarCommand : ICommandBot
             }
             else
             {
-                logger.Error($"Algum item do texto tem mais de 2 caracteres. O texto é {texto[id]}");
+                logger.Error($"Algum item do texto tem mais de 2 caracteres. O texto é {texto[id + 1]}");
                 msgSend = "Comando inválido, verifique e envie novamente.";
             }
         }
