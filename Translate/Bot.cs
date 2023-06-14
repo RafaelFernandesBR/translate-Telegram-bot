@@ -9,7 +9,7 @@ public class Bot
     private readonly ReceiverOptions _receiverOptions;
     private readonly MessageHandler _messageHandler;
     private readonly ILogger _logger;
-    private readonly ErrorHandler _ErrorHandler;
+    private readonly     ErrorHandler _ErrorHandler;
 
     public Bot(TelegramBotClient telegramBotClient, ILogger logger)
     {
