@@ -5,11 +5,11 @@ using Telegram.Bot.Polling;
 namespace Control;
 public class Bot
 {
-    private TelegramBotClient _botClient;
-    private ReceiverOptions _receiverOptions;
-    private MessageHandler _messageHandler;
+    private readonly TelegramBotClient _botClient;
+    private readonly ReceiverOptions _receiverOptions;
+    private readonly MessageHandler _messageHandler;
     private readonly ILogger _logger;
-    private ErrorHandler _ErrorHandler;
+    private readonly ErrorHandler _ErrorHandler;
 
     public Bot(TelegramBotClient telegramBotClient, ILogger logger)
     {

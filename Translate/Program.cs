@@ -19,7 +19,7 @@ public class Program
             })
             .Build();
 
-        host.Services.GetRequiredService<Bot>().Start();
+        await host.Services.GetRequiredService<Bot>().Start();
 
         // Handle application shutdown
         var cancellationTokenSource = new CancellationTokenSource();
